@@ -1,14 +1,14 @@
+import { Header } from "@/components/Header.jsx";
 import { Products } from "@/components/Products.jsx";
 import { useProducts } from "@/hooks/useProducts.js";
-import {Header} from "@/components/Header.jsx";
 
 function App() {
-  const { loading, filteredProducts, filterProducts } = useProducts()
+  const { loading, filteredProducts } = useProducts()
 
   return (
     <main className="main-container">
-      <Header loading={loading} products={filteredProducts} applyFilters={filterProducts} />
-      {filteredProducts?.length > 0 && <Products products={filteredProducts}/>}
+      <Header loading={loading} quantity={filteredProducts.length} />
+      {filteredProducts?.length > 0 && <Products products={filteredProducts} />}
     </main>
   )
 }

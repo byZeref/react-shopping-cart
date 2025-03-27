@@ -1,10 +1,8 @@
-import {useEffect, useState} from "react";
+import { useContext, useEffect } from "react";
+import { FiltersContext } from "@/context/filters.jsx";
 
-export function useFilters({applyFilters}) {
-  const [filters, setFilters] = useState({
-    category: 'all',
-    price: 0
-  })
+export function useFilters() {
+  const { filters, setFilters } = useContext(FiltersContext)
 
   const updatePriceFilter = (val) => {
     setFilters({
@@ -20,9 +18,5 @@ export function useFilters({applyFilters}) {
     })
   }
 
-  useEffect(() => {
-    applyFilters(filters)
-  }, [filters])
-
-  return { filters, setFilters, updatePriceFilter, updateCategoryFilter }
+  return { updatePriceFilter, updateCategoryFilter }
 }
