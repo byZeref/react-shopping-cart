@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react";
-import { FiltersContext } from "@/context/filters.jsx";
+import { useEffect, useState } from "react";
 import { getProducts } from "@/services/products.js";
+import { useFilters } from "@/hooks/useFilters.js";
 
 export const useProducts = () => {
-  const { filters } = useContext(FiltersContext)
+  const { filters } = useFilters()
   const [loading, setLoading] = useState(false)
   const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])

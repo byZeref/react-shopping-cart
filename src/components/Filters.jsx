@@ -1,11 +1,8 @@
-import { useContext } from "react";
-import { FiltersContext } from "@/context/filters.jsx";
 import { useFilters } from "@/hooks/useFilters.js";
 import { CATEGORIES as categories } from '@/utils/constants.js'
 
 export function Filters() {
-  const { filters } = useContext(FiltersContext)
-  const { updatePriceFilter, updateCategoryFilter } = useFilters()
+  const { filters, updatePriceFilter, updateCategoryFilter } = useFilters()
 
   return (
     <div className="flex items-center gap-4">

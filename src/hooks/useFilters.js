@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { FiltersContext } from "@/context/filters.jsx";
 
 export function useFilters() {
@@ -18,5 +18,5 @@ export function useFilters() {
     })
   }
 
-  return { updatePriceFilter, updateCategoryFilter }
+  return { filters, updatePriceFilter, updateCategoryFilter }
 }
