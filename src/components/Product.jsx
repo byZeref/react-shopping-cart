@@ -1,9 +1,11 @@
-import { CartIcon } from "@/components/icons/Cart.jsx";
+import { CartAddIcon } from "@/components/icons/CartAddIcon.jsx";
+import { useCart } from "@/hooks/useCart.js";
 
 export function Product({ product }) {
+  const { addProductToCart } = useCart()
 
   const handleClick = () => {
-    console.log('add prod', product)
+    addProductToCart(product)
   }
 
   return (
@@ -18,7 +20,7 @@ export function Product({ product }) {
             className="absolute bottom-2 right-2 border rounded-full p-[6px] hover:bg-emerald-900 cursor-pointer duration-200"
             onClick={handleClick}
           >
-            <CartIcon />
+            <CartAddIcon />
           </button>
         </div>
       </div>

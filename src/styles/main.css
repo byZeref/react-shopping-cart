@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "./base.css";
 
+body {
+  min-height: 100vh;
+}
+
 .main-container {
   width: 100%;
   padding: 20px 40px;

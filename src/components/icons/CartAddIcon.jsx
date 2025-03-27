@@ -1,4 +1,4 @@
-export function CartIcon({width = '24'}) {
+export function CartAddIcon({width = '24'}) {
 
   return (
     <svg
