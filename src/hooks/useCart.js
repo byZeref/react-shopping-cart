@@ -4,12 +4,17 @@ import {useStorage} from "@/hooks/useStorage.js";
 
 export function useCart() {
   const { cart, setCart, showCart, setShowCart } = useContext(CartContext)
+  const items = useMemo(() => {
+    return cart.reduce((acc, prod) => {
+      acc += prod.quantity
+      return acc
+    }, 0)
+  }, [cart])
   const total = useMemo(() => {
-    let acc = 0
-    cart.forEach(prod => {
+    return cart.reduce((acc, prod) => {
       acc += prod.price * prod.quantity
-    })
-    return acc
+      return acc
+    }, 0)
   }, [cart])
   const { save, remove } = useStorage()
 
@@ -68,5 +73,8 @@ export function useCart() {
     remove()
   }
 
-  return { cart, setCart, showCart, total, toggleCart, addProductToCart, removeProductFromCart, cleanCart }
+  return {
+    cart, setCart, showCart, items, total,
+    toggleCart, addProductToCart, removeProductFromCart, cleanCart
+  }
 }
