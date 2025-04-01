@@ -1,5 +1,6 @@
 import {useContext, useMemo} from "react";
 import { CartContext } from "@/context/cart.jsx";
+import {useStorage} from "@/hooks/useStorage.js";
 
 export function useCart() {
   const { cart, setCart, showCart, setShowCart } = useContext(CartContext)
@@ -10,6 +11,7 @@ export function useCart() {
     })
     return acc
   }, [cart])
+  const { save, remove } = useStorage()
 
   const toggleCart = () => {
     setShowCart(!showCart)
@@ -18,15 +20,18 @@ export function useCart() {
   const addProductToCart = (product) => {
     // via array.map
     const exists = cart.some(item => item.id === product.id)
-    if (!exists) { // <--- agregar el producto (no esta en el carrito aun)
-      setCart([...cart, {...product, quantity: 1}])
-    } else { // <--- aumentar la cantidad del producto (ya esta en el carrito)
-      setCart(cart.map(prod => // <--- usar (prev) para prevenir errores de 'race condition'
+    let newCart
+    if (!exists) {
+      newCart = [...cart, {...product, quantity: 1}]
+    } else {
+      newCart = cart.map(prod =>
         prod.id === product.id
           ? {...prod, quantity: prod.quantity + 1}
           : prod
-      ))
+      )
     }
+    setCart(newCart)
+    save(newCart)
 
     // via structuredClone
     // const copy = structuredClone(cart)
@@ -45,20 +50,22 @@ export function useCart() {
 
   const removeProductFromCart = (product) => {
     if (!cart.some(prod => prod.id === product.id)) return; // <--- no existe el producto en el carrito
-
-    if (product.quantity === 1) { // <--- eliminar el producto
-      setCart(cart.filter(prod => prod.id !== product.id))
-    } else { // <--- disminuir la cantidad del producto
-      setCart(cart.map(prod => prod.id === product.id
+    let newCart
+    if (product.quantity === 1) {
+      newCart = cart.filter(prod => prod.id !== product.id)
+    } else {
+      newCart = cart.map(prod => prod.id === product.id
         ? {...prod, quantity: prod.quantity - 1}
         : prod
-      ))
+      )
     }
+    setCart(newCart)
+    save(newCart)
   }
 
   const cleanCart = () => {
-    console.log('clean cart')
     setCart([])
+    remove()
   }
 
   return { cart, setCart, showCart, total, toggleCart, addProductToCart, removeProductFromCart, cleanCart }
