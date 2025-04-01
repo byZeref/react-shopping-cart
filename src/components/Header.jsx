@@ -5,7 +5,7 @@ export function Header({loading, quantity}) {
     quantity ? <h1>Products</h1> : <h1 className="text-center text-2xl">Sin resultados</h1>
 
   return (
-    <div className="flex justify-between items-center mb-2">
+    <div className="flex flex-wrap gap-2 justify-between items-center mb-2">
       {title}
       {!loading && <Filters />}
     </div>

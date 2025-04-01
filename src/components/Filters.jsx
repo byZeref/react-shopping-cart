@@ -5,15 +5,16 @@ export function Filters() {
   const { filters, updatePriceFilter, updateCategoryFilter } = useFilters()
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex flex-wrap items-center gap-x-4">
       <div className="flex items-center gap-2">
-        <label htmlFor="price-filter">Min price: ({filters.price})</label>
+        <label htmlFor="price-filter">Min price:</label>
         <input
           id="price-filter" type="range"
           min={0} max={1000} step={10}
           value={filters.price}
           onChange={(e) => updatePriceFilter(e.target.value)}
         />
+        <p>({filters.price})</p>
       </div>
 
       <div className="flex items-center gap-2">

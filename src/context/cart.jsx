@@ -4,7 +4,7 @@ export const CartContext = createContext()
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) ?? [])
-  const [showCart, setShowCart] = useState(true)
+  const [showCart, setShowCart] = useState(false)
 
   return (
     <CartContext.Provider value={{ cart, setCart, showCart, setShowCart }}>

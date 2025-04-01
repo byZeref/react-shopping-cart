@@ -10,12 +10,12 @@ function App() {
   const { showCart, toggleCart } = useCart()
 
   return (
-    <main className="main-container">
+    <main className="main-container px-[20px] py-[10px] duration-300 lg:px-[40px] lg:py-[20px]">
       <Header loading={loading} quantity={filteredProducts.length} />
       {filteredProducts?.length > 0 && <Products products={filteredProducts} />}
 
       <CartButton toggle={toggleCart} />
-      {showCart && <Cart />}
+      <Cart visible={showCart} />
     </main>
   )
 }
