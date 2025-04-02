@@ -1,3 +1,4 @@
+import { Loading } from "@/components/Loading.jsx";
 import { Products } from "@/components/Products.jsx";
 import { Header } from "@/components/Header.jsx";
 import { CartButton } from "@/components/CartButton.jsx";
@@ -11,11 +12,20 @@ function App() {
 
   return (
     <main className="main-container px-[20px] py-[10px] duration-300 lg:px-[40px] lg:py-[20px]">
-      <Header loading={loading} quantity={filteredProducts.length} />
-      {filteredProducts?.length > 0 && <Products products={filteredProducts} />}
-
-      <CartButton toggle={toggleCart} quantity={items} />
-      <Cart visible={showCart} />
+      {loading && <Loading />}
+      {
+        !loading &&
+        <>
+          {filteredProducts?.length > 0 &&
+            <>
+              <Header quantity={filteredProducts.length}/>
+              <Products products={filteredProducts} />
+            </>
+          }
+          <CartButton toggle={toggleCart} quantity={items}/>
+          <Cart visible={showCart} />
+        </>
+      }
     </main>
   )
 }
