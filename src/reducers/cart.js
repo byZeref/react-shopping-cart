@@ -42,5 +42,8 @@ export const cartReducer = (state, action) => {
       remove()
       return []
     }
+    default: {
+      return state
+    }
   }
 }
