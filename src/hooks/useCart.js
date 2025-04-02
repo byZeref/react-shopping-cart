@@ -1,6 +1,7 @@
-import {useContext, useMemo} from "react";
+import { useContext, useMemo } from "react";
 import { CartContext } from "@/context/cart.jsx";
-import {useStorage} from "@/hooks/useStorage.js";
+import { useStorage } from "@/hooks/useStorage.js";
+import { CountUp } from "countup.js";
 
 export function useCart() {
   const { cart, setCart, showCart, setShowCart } = useContext(CartContext)
@@ -73,8 +74,18 @@ export function useCart() {
     remove()
   }
 
+  const runTotalAmountAnimation = () => {
+    const options = {
+      duration: 0.3,
+      decimalPlaces: 2,
+      prefix: '$ ',
+    }
+    const anim = new CountUp('total-amount', total, options)
+    !anim.error ? anim.start() : console.log(anim.error)
+  }
+
   return {
     cart, setCart, showCart, items, total,
-    toggleCart, addProductToCart, removeProductFromCart, cleanCart
+    toggleCart, addProductToCart, removeProductFromCart, cleanCart, runTotalAmountAnimation
   }
 }
