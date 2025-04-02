@@ -1,10 +1,12 @@
-import { useContext, useMemo } from "react";
+import { useContext, useMemo, useState } from "react";
 import { CartContext } from "@/context/cart.jsx";
-import { useStorage } from "@/hooks/useStorage.js";
 import { CountUp } from "countup.js";
+import { CART_ACTIONS } from '@/utils/constants.js'
+const { ADD_PRODUCT_TO_CART, REMOVE_PRODUCT_FROM_CART, CLEAN_CART } = CART_ACTIONS
 
 export function useCart() {
-  const { cart, setCart, showCart, setShowCart } = useContext(CartContext)
+  const {cart, dispatch} = useContext(CartContext)
+  const [showCart, setShowCart] = useState(false)
   const items = useMemo(() => {
     return cart.reduce((acc, prod) => {
       acc += prod.quantity
@@ -17,61 +19,17 @@ export function useCart() {
       return acc
     }, 0)
   }, [cart])
-  const { save, remove } = useStorage()
 
-  const toggleCart = () => {
-    setShowCart(!showCart)
-  }
+  const toggleCart = () => setShowCart(!showCart)
 
   const addProductToCart = (product) => {
-    // via array.map
-    const exists = cart.some(item => item.id === product.id)
-    let newCart
-    if (!exists) {
-      newCart = [...cart, {...product, quantity: 1}]
-    } else {
-      newCart = cart.map(prod =>
-        prod.id === product.id
-          ? {...prod, quantity: prod.quantity + 1}
-          : prod
-      )
-    }
-    setCart(newCart)
-    save(newCart)
-
-    // via structuredClone
-    // const copy = structuredClone(cart)
-    // const target = copy.find(prod => prod.id === product.id)
-    // if (target) {
-    //   target.quantity++
-    //   setCart(copy)
-    // } else {
-    //   setCart(prev => [
-    //     ...prev,
-    //     {...product, quantity: 1}
-    //   ])
-    // }
-
+    dispatch({ type: ADD_PRODUCT_TO_CART, payload: product })
   }
-
   const removeProductFromCart = (product) => {
-    if (!cart.some(prod => prod.id === product.id)) return; // <--- no existe el producto en el carrito
-    let newCart
-    if (product.quantity === 1) {
-      newCart = cart.filter(prod => prod.id !== product.id)
-    } else {
-      newCart = cart.map(prod => prod.id === product.id
-        ? {...prod, quantity: prod.quantity - 1}
-        : prod
-      )
-    }
-    setCart(newCart)
-    save(newCart)
+    dispatch({ type: REMOVE_PRODUCT_FROM_CART, payload: product })
   }
-
   const cleanCart = () => {
-    setCart([])
-    remove()
+    dispatch({ type: CLEAN_CART })
   }
 
   const runTotalAmountAnimation = () => {
@@ -85,7 +43,7 @@ export function useCart() {
   }
 
   return {
-    cart, setCart, showCart, items, total,
-    toggleCart, addProductToCart, removeProductFromCart, cleanCart, runTotalAmountAnimation
+    cart, showCart, items, total,
+    toggleCart, addProductToCart, removeProductFromCart, cleanCart, runTotalAmountAnimation,
   }
 }

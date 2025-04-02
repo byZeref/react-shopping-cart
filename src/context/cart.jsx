@@ -1,13 +1,13 @@
-import { createContext, useState } from 'react'
+import { createContext, useReducer, useState } from 'react'
+import { initialState, cartReducer } from '@/reducers/cart.js'
 
 export const CartContext = createContext()
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) ?? [])
-  const [showCart, setShowCart] = useState(false)
+  const [state, dispatch] = useReducer(cartReducer, initialState)
 
   return (
-    <CartContext.Provider value={{ cart, setCart, showCart, setShowCart }}>
+    <CartContext.Provider value={{ cart: state, dispatch }}>
       { children }
     </CartContext.Provider>
   )
