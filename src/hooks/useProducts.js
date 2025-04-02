@@ -29,5 +29,5 @@ export const useProducts = () => {
     else filterProducts()
   }, [filters])
 
-  return { loading, filteredProducts, filterProducts }
+  return { loading, products, filteredProducts, filterProducts }
 }

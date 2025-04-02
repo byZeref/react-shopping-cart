@@ -7,7 +7,7 @@ import { useProducts } from "@/hooks/useProducts.js";
 import { useCart } from "@/hooks/useCart.js";
 
 function App() {
-  const { loading, filteredProducts } = useProducts()
+  const { loading, filteredProducts, products } = useProducts()
   const { items, showCart, toggleCart } = useCart()
 
   return (
@@ -16,7 +16,7 @@ function App() {
       {
         !loading &&
         <>
-          {filteredProducts?.length > 0 &&
+          {products?.length > 0 &&
             <>
               <Header quantity={filteredProducts.length}/>
               <Products products={filteredProducts} />
