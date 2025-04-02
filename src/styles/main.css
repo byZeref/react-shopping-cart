@@ -20,6 +20,7 @@ body {
   }
   .cart-button {
     transition: transform 200ms ease-out;
+    box-shadow: black 0 0 20px;
     &:active {
       transform: scale(.85);
     }
