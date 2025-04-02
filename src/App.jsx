@@ -23,7 +23,7 @@ function App() {
             </>
           }
           <CartButton toggle={toggleCart} quantity={items}/>
-          <Cart visible={showCart} />
+          <Cart visible={showCart} toggle={toggleCart} />
         </>
       }
     </main>

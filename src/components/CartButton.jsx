@@ -17,7 +17,7 @@ export function CartButton({toggle, quantity}) {
 
   return (
     <button
-      className="cart-button fixed bottom-4 left-4 rounded-full p-4 bg-blue-500 text-white cursor-pointer z-50"
+      className="cart-button fixed bottom-4 left-4 rounded-full p-4 bg-blue-500 text-white cursor-pointer z-100"
       onClick={toggle}
     >
       <CartIcon />
